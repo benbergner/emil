@@ -1,4 +1,4 @@
-![emil architecture](images/emil.png "EMIL architecture")
+<img src="images/emil.png" width="800" />
 
 # EMIL
 

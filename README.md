@@ -56,4 +56,4 @@ For classical Multiple Instance Learning problems, such as the detection of dent
 ## Visualization
 Both `pred_local` and `pred_weight` can be visualized as heatmaps. We show an example for MNIST and k_min=100.
 
-<img src="images/mnist_pred_weight.png" width="500" />
+<img src="images/mnist_pred_weight.png" width="350" />

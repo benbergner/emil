@@ -36,7 +36,7 @@ def vis_multiple_imgs(images, heatmaps, fpath):
     num_rows = int(b**0.5)
     num_cols = num_rows
     
-    fig = plt.figure(figsize=(8,8), dpi=300)
+    fig = plt.figure(figsize=(8,8), dpi=600)
     for i, (img, hmap) in enumerate(zip(images, heatmaps)):
         img = img.cpu().numpy()
         img = (img - np.min(img)) / np.ptp(img)

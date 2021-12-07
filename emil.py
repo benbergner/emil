@@ -3,10 +3,10 @@ from torch import nn
 from resnet import resnet18
 
 class EMIL(nn.Module):
-    def __init__(self, output_type, num_inp_channels, num_fmap_channels, att_dim, num_classes, patch_size, patch_stride, K_min):
+    def __init__(self, output_type, num_inp_channels, num_fmap_channels, att_dim, num_classes, patch_size, patch_stride, k_min):
         super().__init__()
         self.num_classes = num_classes
-        self.K_min = K_min
+        self.k_min = k_min
 
         self.backbone = resnet18(num_channels=num_inp_channels, num_classes=num_classes)
         self.patch_extractor = nn.AvgPool2d(patch_size, patch_stride)
@@ -42,7 +42,7 @@ class EMIL(nn.Module):
 
         x_local = self.shared_output_layer(x).view(b, k, self.num_classes)
         x_weight = self.att_outer(self.att_tanh(x) * self.att_sigm(x)).view(b, k, 1)
-        pred = torch.sum(x_local * x_weight, dim = 1) / torch.clamp(torch.sum(x_weight, dim = 1), min = self.K_min)
+        pred = torch.sum(x_local * x_weight, dim = 1) / torch.clamp(torch.sum(x_weight, dim = 1), min = self.k_min)
 
         if output_heatmaps:
             return pred, x_local, x_weight

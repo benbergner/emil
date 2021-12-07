@@ -1,3 +1,3 @@
-![emil architecture](imgs/emil.png "EMIL architecture")
+![emil architecture](images/emil.png "EMIL architecture")
 
 # emil

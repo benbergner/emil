@@ -53,8 +53,6 @@ Patch stride in embedding space
 Minimum number of patches to achieve full class score. Default value is based on a maximum number of 16x16=256 patches.
 
 ## Visualization
-Both `pred_local` and `pred_weight` can be visualized as heatmaps. We show an example for MNIST below.
+Both `pred_local` and `pred_weight` can be visualized as heatmaps. We show an example for MNIST for k_min=100.
 
-![local prediction heatmap](images/mnist_pred_local.png "Local Prediction Heatmap")
-
-![patch weight heatmap](images/mnist_pred_weight.png "Patch Weight Heatmap")
+<img src="images/mnist_pred_weight.png" width="500" />

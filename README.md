@@ -22,7 +22,7 @@ net = EMIL(
 
 img = torch.randn(1, 1, 32, 32)
 
-pred, pred_local, pred_weight = net(img, output_heatmaps=True) # (1, 10), (1, k, 10),  (1, k, 1)
+pred, pred_local, pred_weight = net(img, output_heatmaps=True) # (1, 10), (1, k, 10), (1, k, 1)
 ```
 
 `pred_local` holds local patch predictions, `pred_weight` holds attention weights.

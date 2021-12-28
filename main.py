@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import torch
 from torch import nn
 import torchvision.transforms as transforms
@@ -11,7 +12,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 img_size = 32
 b = 256
-num_epochs = 10
+num_epochs = 20
 fmap_dims = (16, 16)
 patch_size = 1
 patch_stride = 1
@@ -61,6 +62,7 @@ test_loader = DataLoader(
 loss_fn = nn.NLLLoss() if output_type == 'multiclass' else nn.BCELoss()
 optimizer = torch.optim.Adam(net.parameters())
 
+loss_ls = []
 # begin training
 for epoch in range(num_epochs):
     net.train()
@@ -68,6 +70,8 @@ for epoch in range(num_epochs):
         images, labels = data[0].to(device), data[1].to(device)
         optimizer.zero_grad()        
         pred = net(images, output_heatmaps=False)
+
+        pred = torch.log(pred) if output_type == 'multiclass' else pred
         loss = loss_fn(pred, labels)
         loss.backward()
         optimizer.step()
@@ -78,10 +82,15 @@ for epoch in range(num_epochs):
         for data in test_loader:
             images, labels = data[0].to(device), data[1].to(device)
             pred = net(images, output_heatmaps=False)
+            
             pred_class = torch.max(pred, 1)[1] 
             correct += (pred_class == labels).sum()
             total += labels.shape[0]
-        print("Epoch: {}, Accuracy: {}".format(epoch+1, correct / total))
+
+            pred = torch.log(pred) if output_type == 'multiclass' else pred
+            loss = loss_fn(pred, labels)
+            loss_ls.append(loss.item())
+        print("Epoch: {}, Loss: {}, Accuracy: {}".format(epoch+1, np.mean(loss_ls), correct / total))
     
 # save model
 torch.save({

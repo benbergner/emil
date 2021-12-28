@@ -31,7 +31,7 @@ net = EMIL(
     num_classes = num_classes,
     patch_size = patch_size,
     patch_stride = patch_stride,
-    K_min = 100
+    k_min = 100
 ).to(device)
 
 #data prep
